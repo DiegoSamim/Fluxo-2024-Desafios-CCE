@@ -37,13 +37,15 @@ class Usuario {
     }
 
     verHistoricoDeReservas() {
-
+        console.clear();
+        console.log("-".repeat(50));
         this.historicoDeReservas.forEach((reserva) => {
             for (let atributo in reserva) {
                 console.log(`${atributo}: ${reserva[atributo]}`);
             }
             console.log('---');
         });
+        console.log("-".repeat(50));
     }
 
 }

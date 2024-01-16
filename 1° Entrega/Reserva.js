@@ -27,33 +27,43 @@ class Reserva{
         });
     }
 
-    static calcularValorReserva(precoPorNoite, CheckInUsuario, CheckOutUsuario) {
+    // Calcula o valor total da reserva com base no preço por noite, data de check-in e data de check-out
+    static calcularValorReserva(precoPorNoite, checkInUsuario, checkOutUsuario) {
+        // Converte o preço por noite para um número inteiro
         const precoPorNoiteNumerico = parseInt(precoPorNoite);
 
+        // Verifica se o preço por noite é um número positivo
         if (isNaN(precoPorNoiteNumerico) || precoPorNoiteNumerico < 0) {
             throw new Error("Preço por noite inválido. Deve ser um número positivo.");
         }
 
-        if (!CheckInUsuario || !CheckOutUsuario) {
+        // Verifica se as datas de check-in e check-out foram fornecidas
+        if (!checkInUsuario || !checkOutUsuario) {
             throw new Error("Datas de check-in e check-out não foram fornecidas.");
         }
 
-        const partesCheckIn = CheckInUsuario.split("/");
-        const partesCheckOut = CheckOutUsuario.split("/");
+        // Divide as datas de check-in e check-out em partes (dia, mês, ano)
+        const partesCheckIn = checkInUsuario.split("/");
+        const partesCheckOut = checkOutUsuario.split("/");
 
+        // Cria objetos de data para as datas de check-in e check-out
         const dataCheckIn = new Date(partesCheckIn[2], partesCheckIn[1] - 1, partesCheckIn[0]);
         const dataCheckOut = new Date(partesCheckOut[2], partesCheckOut[1] - 1, partesCheckOut[0]);
 
+        // Verifica se as datas de check-in e check-out são válidas
         if (isNaN(dataCheckIn) || isNaN(dataCheckOut) || dataCheckOut <= dataCheckIn) {
             throw new Error("Datas de check-in e check-out inválidas.");
         }
 
+        // Calcula o número de dias de hospedagem
         const diasDeHospedagem = Math.ceil((dataCheckOut - dataCheckIn) / (1000 * 60 * 60 * 24));
+
+        // Calcula o valor total da reserva
         const valorTotal = diasDeHospedagem * precoPorNoiteNumerico;
 
         return valorTotal;
     }
-
+    
     verDadosDaReserva(){
         console.log(`\nId da Propriedade: ${this.idPropriedade}`);
         console.log(`Id do Usuario: ${this.idUsuario}`);
