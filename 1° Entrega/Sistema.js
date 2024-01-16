@@ -2,6 +2,7 @@ import { question } from 'readline-sync';
 import Usuario from './Usuario.js';
 import Propriedade from './Propriedade.js';
 import Reserva from './Reserva.js';
+import Anuncio from './Anuncio.js';
 
 class Sistema{
     constructor() {
@@ -39,9 +40,9 @@ class Sistema{
 
     //---------------------------------------- Propriedade ----------------------------------------
 
-    adicionarPropriedades(nomePropriedade, endereço, capacidade, numDeQuartos, precoPorNoite, disponibilidade){
+    adicionarPropriedades(nomePropriedade, nomeProprietario, endereço, capacidade, numDeQuartos, precoPorNoite, disponibilidade){
 
-        const novaPropriedade = new Propriedade(nomePropriedade, endereço, capacidade, numDeQuartos, precoPorNoite, disponibilidade);
+        const novaPropriedade = new Propriedade(nomePropriedade, nomeProprietario, endereço, capacidade, numDeQuartos, precoPorNoite, disponibilidade);
         Propriedade.listaDePropriedades.push(novaPropriedade);
         Propriedade.listaDePropriedades.sort((a, b) => { return a.nomePropriedade.localeCompare(b.nomePropriedade);});
         console.clear();
@@ -50,7 +51,7 @@ class Sistema{
     }
 
     excluirPropriedades() {
-        Propriedade.verListaDePropriedades();
+        this.verListaDePropriedades();
     
         const escolha = question('Escolha o ID da propriedade para remover: ');
     
@@ -64,11 +65,18 @@ class Sistema{
             Propriedade.listaDePropriedades.splice(indiceParaRemover, 1);
             console.clear();
             console.log(`Propriedade com ID ${idParaRemover} removida com sucesso.`);
-            Propriedade.verListaDePropriedades();
+            this.verListaDePropriedades();
         } else {
             console.clear();
             console.log(`Propriedade com ID ${idParaRemover} não encontrada.`);
         }
+    }
+
+    verListaDePropriedades(){
+        Propriedade.listaDePropriedades.forEach((propriedade) => {
+            propriedade.verDadosDaPropriedade();
+            console.log('---');
+        });
     }
 
     //---------------------------------------- Reserva ----------------------------------------
@@ -118,6 +126,42 @@ class Sistema{
         } else {
             console.clear();
             console.log(`Reserva com ID ${idParaRemover} não encontrada.`);
+        }
+    }
+
+    //---------------------------------------- Anuncio ----------------------------------------
+
+    criarObjAnuncio(nomePropriedade, nomeProprietario, idpropriedade, titulo, descricao, status){
+        const novoAnuncio = new Anuncio(nomePropriedade, nomeProprietario, idpropriedade, titulo, descricao, status);
+        Anuncio.ListaDeAnuncios.push(novoAnuncio);
+        Anuncio.ListaDeAnuncios.sort((a, b) => { return a.nomePropriedade.localeCompare(b.nomePropriedade);});
+        console.clear();
+        console.log('\nAnuncio Criado!');
+    }
+
+    verListaDeAnuncios(){
+        Anuncio.ListaDeAnuncios.forEach((anuncio) => {
+            anuncio.verDadosDoAnuncio();
+            console.log('---');
+        });
+    }
+
+    excluirAnuncio(){
+        this.verListaDeAnuncios();
+
+        const escolha = question('Escolha o ID do anuncio que voce gostaria de remover: ');
+        const idAnuncio = parseInt(escolha);
+        const indiceParaRemover = Anuncio.ListaDeAnuncios.findIndex(anuncio => anuncio.idAnuncio === idAnuncio);
+
+        if (indiceParaRemover !== -1) {
+            // Remover a propriedade com base no índice encontrado
+            Anuncio.ListaDeAnuncios.splice(indiceParaRemover, 1);
+            console.clear();
+            console.log(`Anuncio com ID ${idAnuncio} removido com sucesso.`);
+            this.verListaDeAnuncios();
+        } else {
+            console.clear();
+            console.log(`Propriedade com ID ${idAnuncio} não encontrada.`);
         }
     }
 

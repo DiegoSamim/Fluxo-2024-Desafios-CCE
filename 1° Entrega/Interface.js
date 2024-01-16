@@ -2,6 +2,7 @@ import {question, keyInPause, keyInYN} from 'readline-sync';
 import Sistema from './Sistema.js';
 import Propriedade from './Propriedade.js';
 import Reserva from './Reserva.js';
+import Anuncio from './Anuncio.js';
 
 // Classe com os métodos para criar a interface e seus inputs com as respectivas variáveis
 
@@ -177,12 +178,12 @@ class Interface {
     
             switch (escolha) {
                 case '1':
-                    Propriedade.verListaDePropriedades();
+                    this.sistema.verListaDePropriedades();
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
     
                 case '2':
-                    this.teladeCadastrarPropriedades();
+                    this.telaCadastrarPropriedades();
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
                     
@@ -192,11 +193,11 @@ class Interface {
                     break;
 
                 case '4':
-                    this.telaDeAvaliarEstadia();
+                    this.telaAvaliarEstadia();
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
                 case '5':
-                    this.telaDeVisualizarAvaliacao();
+                    this.telaVisualizarAvaliacao();
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
 
@@ -215,31 +216,32 @@ class Interface {
         }
     }
 
-    teladeCadastrarPropriedades(){
+    telaCadastrarPropriedades(){
         while(true){
 
             console.clear();
 
             console.log('Tela de Cadastro de Propriedades!');
             const nomeInput = question('Digite um nome para a propriedade: ') || '';
+            const nomeProprietarioInput = question('Digite o nome do proprietario: ') || '';
             const enderecoInput = question('Digite seu endereco:') || '';
             const capacidadeInput = question('Digite a capacidade da Propriedade: ') || '';
             const numDeQuartosInput = question('Digite o numero de quartos:') || '';
             const precoInput = question('Digite o valor de uma noite:') || '';
             const disponibilidadeInput = keyInYN('A propriedade esta disponivel ? (aperte "y" para sim e "n" para nao)') || '';
-            this.sistema.adicionarPropriedades(nomeInput, enderecoInput, capacidadeInput, numDeQuartosInput, precoInput, disponibilidadeInput);
+            this.sistema.adicionarPropriedades(nomeInput, nomeProprietarioInput, enderecoInput, capacidadeInput, numDeQuartosInput, precoInput, disponibilidadeInput);
             break;      
         }
     }
 
-    telaDeAvaliarEstadia(){
+    telaAvaliarEstadia(){
 
         console.clear();
         console.log("-".repeat(50));
         console.log("Avaliação de Reserva");
         console.log("-".repeat(50));
 
-        Propriedade.verListaDePropriedades();
+        this.sistema.verListaDePropriedades();
         const escolha = question('Escolha o ID da propriedade que voce gostaria de avaliar: ');
         const idPropriedade = parseInt(escolha);
         const propriedadeSelecionada = Propriedade.listaDePropriedades.find(propriedade => propriedade.idPropriedade === idPropriedade);
@@ -253,13 +255,13 @@ class Interface {
         console.log("-".repeat(50));
     }
 
-    telaDeVisualizarAvaliacao(){
+    telaVisualizarAvaliacao(){
         console.clear();
         console.log("-".repeat(50));
         console.log("Avaliaçõe da Propriedade");
         console.log("-".repeat(50));
 
-        Propriedade.verListaDePropriedades();
+        this.sistema.verListaDePropriedades();
         const escolha = question('Escolha o ID da propriedade que voce gostaria de ver as avaliacoes: ');
         const idPropriedade = parseInt(escolha);
         const propriedadeSelecionada = Propriedade.listaDePropriedades.find(propriedade => propriedade.idPropriedade === idPropriedade);
@@ -285,7 +287,7 @@ class Interface {
     
             switch (escolha) {
                 case '1':
-                    this.telaDeCadastrarReserva(usuario)
+                    this.telaCadastrarReserva(usuario)
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
                 case '2':
@@ -305,14 +307,14 @@ class Interface {
         }
     }
 
-    telaDeCadastrarReserva(usuario){
+    telaCadastrarReserva(usuario){
         while(true){
             console.clear()
             console.log("-".repeat(50));
             console.log('Reserva de Propriedade');
             console.log("-".repeat(50));
 
-            Propriedade.verListaDePropriedades();
+            this.sistema.verListaDePropriedades();
             const escolha = question('Escolha o ID da propriedade que voce gostaria de reservar: ');
             const idReserva = parseInt(escolha);
             const idPropriedadeInput = Propriedade.listaDePropriedades.findIndex(propriedade => propriedade.idPropriedade === idReserva);
@@ -335,7 +337,69 @@ class Interface {
     //------------------------------------ Menu de login cadastrado - Anuncios ------------------------------------
 
     telaDeLoginCadastrado_Anuncios(){
+        let ciclo = true;
+        while (ciclo) {
+            console.clear();
+            console.log("\nEscolha uma opção:");
+            console.log("1. Fazer um anuncio");
+            console.log("2. Excluir anuncio")
+            console.log("3. Ver lista de anuncio");
+            console.log("4. Retornar ao menu de seções")
 
+    
+            const escolha = question('Digite o numero da opcao desejada: ');
+    
+            switch (escolha) {
+                case '1':
+                    this.telaFazerAnuncio();
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '2':
+                    this.telaExcluirAnuncio()
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '3':
+                    this.sistema.verListaDeAnuncios();
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '4':
+                    ciclo = false;
+                    break;
+                default:
+                    console.log('Opção inválida. Por favor, escolha uma opção válida.');
+            }
+        }
+    }
+
+    telaFazerAnuncio(){
+        while(true){
+            console.clear()
+            console.log("-".repeat(50));
+            console.log('Fazer um anuncio para uma propriedade');
+            console.log("-".repeat(50));
+    
+            this.sistema.verListaDePropriedades();
+            const escolha = question('Escolha o ID da propriedade que voce gostaria de fazer o anuncio: ');
+            const idReserva = parseInt(escolha);
+            const idPropriedadeInput = Propriedade.listaDePropriedades.findIndex(propriedade => propriedade.idPropriedade === idReserva);
+            const propriedadeSelecionada = Propriedade.listaDePropriedades.find(propriedade => propriedade.idPropriedade === idReserva);
+    
+            const tituloInput = question('Digite o titulo do seu anuncio:');
+            const descricaoInput = question('Faca uma descricao do seu anuncio:');
+            const statusInput = question('Diga o status do anuncio ("Ativo" ou "Nao Ativo"):')
+            
+            this.sistema.criarObjAnuncio(propriedadeSelecionada.nomePropriedade, propriedadeSelecionada.nomeProprietario, idPropriedadeInput, tituloInput, descricaoInput, statusInput)
+            break;
+        }
+    }
+
+    telaExcluirAnuncio(){
+        console.clear()
+        console.log("-".repeat(50));
+        console.log('Excluir Anuncio');
+        console.log("-".repeat(50));
+
+        this.sistema.excluirAnuncio();
     }
 
 }

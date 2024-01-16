@@ -2,9 +2,10 @@ class Propriedade {
     static id = 0;
     static listaDePropriedades = [];
 
-    constructor(nomePropriedade, endereço, capacidade, numDeQuartos, precoPorNoite, disponibilidade) {
+    constructor(nomePropriedade, nomeProprietario, endereço, capacidade, numDeQuartos, precoPorNoite, disponibilidade) {
         this.idPropriedade = Propriedade.id++;
         this.nomePropriedade = nomePropriedade;
+        this.nomeProprietario = nomeProprietario;
         this.endereço = endereço;
         this.capacidade = capacidade;
         this.numDeQuartos = numDeQuartos;
@@ -13,16 +14,11 @@ class Propriedade {
         this.avaliacoes = [];
     }
 
-    static verListaDePropriedades(){
-        Propriedade.listaDePropriedades.forEach((propriedade) => {
-            propriedade.verDadosDaPropriedade();
-            console.log('---');
-        });
-    }
 
     verDadosDaPropriedade(){
         console.log(`\nID: ${this.idPropriedade}`);
         console.log(`Nome da Propriedade: ${this.nomePropriedade}`);
+        console.log(`Nome do Proprietario: ${this.nomeProprietario}`);
         console.log(`Endereço: ${this.endereço}`);
         console.log(`Capacidade: ${this.capacidade}`);
         console.log(`N° de Quartos: ${this.numDeQuartos}`);

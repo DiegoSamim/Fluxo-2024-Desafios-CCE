@@ -28,9 +28,9 @@ Desenvolver um sistema personalizado que atenda de forma precisa e eficiente às
 - [x] Visualizar Avaliações
 
 #### Anuncio
-- [] Ver Lista de Anúncios (Ordem Alfabética)
-- [] Fazer Anúncio
-- [] Excluir Anúncio
+- [x] Ver Lista de Anúncios (Ordem Alfabética)
+- [x] Fazer Anúncio
+- [x] Excluir Anúncio
 
 #### Usuario
 - [x] Ver Meus Dados
