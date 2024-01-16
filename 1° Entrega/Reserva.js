@@ -1,12 +1,32 @@
 class Reserva{
-    constructor(idReserva, idPropriedade, idUsuario, DataCheckIn, DataCheckOut, ValorTotalReserva, StatusPagamento ){
-        this.idReserva = idReserva;
+
+    static id = 0;
+    static ListadeReservas = [];
+
+    constructor(idPropriedade, idUsuario, dataCheckIn, dataCheckOut, valorTotalReserva, statusPagamento){
+        this.idReserva = Reserva.id++;
         this.idPropriedade = idPropriedade;
         this.idUsuario = idUsuario;
-        this.DataCheckIn = DataCheckIn;
-        this.DataCheckOut = DataCheckOut;
-        this.ValorTotalReserva = ValorTotalReserva;
-        this.StatusPagamento = StatusPagamento;
+        this.dataCheckIn = dataCheckIn;
+        this.dataCheckOut = dataCheckOut;
+        this.valorTotalReserva = valorTotalReserva;
+        this.statusPagamento = statusPagamento;
+    }
+
+    static verListaDeReservas(){
+        
+    }
+
+    calcularValorReserva(){
+
+    }
+
+    avaliarEstadia(){
+
+    }
+
+    vizualizarAvaliacoes(){
+        
     }
 }
 

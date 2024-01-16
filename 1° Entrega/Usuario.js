@@ -4,7 +4,7 @@ import {question} from 'readline-sync';
 class Usuario {
 
     static id = 0;
-    static ListadeUsuarios = [];
+    static ListaDeUsuarios = [];
 
     constructor(nome, cpf, enderecoDeContato, telefone){
         this.idUsuario = Usuario.id++;
@@ -12,7 +12,7 @@ class Usuario {
         this.cpf = cpf;
         this.enderecoDeContato = enderecoDeContato;
         this.telefone = telefone;
-        //this.HistoricoDeReservas = HistoricoDeReservas;
+        this.historicoDeReservas = [];
     }
 
     verMeusDados(){
@@ -23,7 +23,7 @@ class Usuario {
         console.log(`CPF: ${this.cpf}`);
         console.log(`Endereço de Contato: ${this.enderecoDeContato}`);
         console.log(`Telefone: ${this.telefone}`);
-        //console.log(`Historico de Reservas: ${this.historicodeReservas}`);
+        console.log(`Historico de Reservas: ${this.historicoDeReservas}`);
     }
 
     modificarMeusDados(){
@@ -34,6 +34,10 @@ class Usuario {
         this.enderecoDeContato = question(`Digite seu endereco (${this.enderecoDeContato}): `) || this.enderecoDeContato;
         this.telefone = question(`Digite seu telefone (${this.telefone}): `) || this.telefone;
         console.log('Mudança de Dados Concluída');
+    }
+
+    verHistoricoDeReservas(){
+
     }
 
 }

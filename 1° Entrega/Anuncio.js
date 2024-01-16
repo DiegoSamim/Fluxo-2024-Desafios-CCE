@@ -7,6 +7,18 @@ class Anuncio{
         this.descricao = descricao;
         this.status = status;
     }
+
+    verListaDeAnuncios(){
+
+    }
+
+    fazerAnuncio(){
+
+    }
+
+    excluirAnuncio(){
+        
+    }
 }
 
 export default Anuncio;
