@@ -36,8 +36,14 @@ class Usuario {
         console.log('Mudança de Dados Concluída');
     }
 
-    verHistoricoDeReservas(){
+    verHistoricoDeReservas() {
 
+        this.historicoDeReservas.forEach((reserva) => {
+            for (let atributo in reserva) {
+                console.log(`${atributo}: ${reserva[atributo]}`);
+            }
+            console.log('---');
+        });
     }
 
 }

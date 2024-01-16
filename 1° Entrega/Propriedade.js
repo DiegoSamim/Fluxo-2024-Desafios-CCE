@@ -10,11 +10,14 @@ class Propriedade {
         this.numDeQuartos = numDeQuartos;
         this.precoPorNoite = precoPorNoite;
         this.disponibilidade = disponibilidade;
+        this.avaliacoes = [];
     }
 
     static verListaDePropriedades(){
-        console.clear()
-        Propriedade.listaDePropriedades.forEach((propriedade) => {propriedade.verDadosDaPropriedade();});
+        Propriedade.listaDePropriedades.forEach((propriedade) => {
+            propriedade.verDadosDaPropriedade();
+            console.log('---');
+        });
     }
 
     verDadosDaPropriedade(){
@@ -25,6 +28,13 @@ class Propriedade {
         console.log(`N° de Quartos: ${this.numDeQuartos}`);
         console.log(`Preço por Noite: ${this.precoPorNoite}`);
         console.log(`Disponibilidade: ${this.disponibilidade}`);
+    }
+
+    verAvaliacoes() {
+        this.avaliacoes.forEach((avaliacao) => {
+            console.log(avaliacao);
+            console.log('---');
+        });
     }
 
     modificarDadosDaPropriedade(){

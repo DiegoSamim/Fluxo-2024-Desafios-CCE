@@ -1,6 +1,7 @@
 import {question, keyInPause, keyInYN} from 'readline-sync';
 import Sistema from './Sistema.js';
 import Propriedade from './Propriedade.js';
+import Reserva from './Reserva.js';
 
 // Classe com os métodos para criar a interface e seus inputs com as respectivas variáveis
 
@@ -58,6 +59,7 @@ class Interface {
     
             if (usuarioEncontrado){
                 this.telaDeLoginCadastrado(usuarioEncontrado);
+                break;
             }
         }
 
@@ -97,7 +99,7 @@ class Interface {
             console.log("4. Anúncio ");
             console.log("5. Retornar ao menu inicial");
 
-            const escolha = question('Digite o numero da seção desejada: ');
+            const escolha = question('Digite o numero da secao desejada: ');
 
             switch (escolha) {
                 case '1':
@@ -128,6 +130,7 @@ class Interface {
     teladeLoginCadastrado_Usuario(usuario){
         let ciclo = true;
         while (ciclo) {
+            console.clear();
             console.log("\nEscolha uma opção:");
             console.log("1. Ver meus dados");
             console.log("2. Modificar meus dados ");
@@ -160,12 +163,15 @@ class Interface {
     telaDeLoginCadastrado_Propriedades(){
         let ciclo = true;
         while (ciclo) {
+            console.clear();
             console.log("\nEscolha uma opção:");
             console.log("1. Lista de Propriedades da Pousada Eclipse");
             console.log("2. Adicionar uma Propriedade ");
             console.log("3. Remover uma Propriedade");
-            console.log("4. Modificar dados de uma Propriedade");
-            console.log("5. Retornar ao menu de seções");
+            console.log("4. Avaliar Estadia");
+            console.log("5. Vizualizar Avaliações")
+            console.log("6. Modificar dados de uma Propriedade");
+            console.log("7. Retornar ao menu de seções");
     
             const escolha = question('Digite o numero da opcao desejada: ');
     
@@ -176,7 +182,7 @@ class Interface {
                     break;
     
                 case '2':
-                    this.teladeCadastro_Propriedades();
+                    this.teladeCadastrarPropriedades();
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
                     
@@ -186,11 +192,20 @@ class Interface {
                     break;
 
                 case '4':
+                    this.telaDeAvaliarEstadia();
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '5':
+                    this.telaDeVisualizarAvaliacao();
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+
+                case '6':
                     // Função que modifica os dados de uma propriedade
                     keyInPause('\nPressione qualquer tecla para retornar ao menu.');
                     break;
 
-                case '5':
+                case '7':
                     ciclo = false;
                     break;
                     
@@ -200,7 +215,7 @@ class Interface {
         }
     }
 
-    teladeCadastro_Propriedades(){
+    teladeCadastrarPropriedades(){
         while(true){
 
             console.clear();
@@ -211,81 +226,111 @@ class Interface {
             const capacidadeInput = question('Digite a capacidade da Propriedade: ') || '';
             const numDeQuartosInput = question('Digite o numero de quartos:') || '';
             const precoInput = question('Digite o valor de uma noite:') || '';
-            const disponibilidadeInput = keyInYN('A propriedade está disponivel? (aperte "y" para sim e "n" para não)') || '';
+            const disponibilidadeInput = keyInYN('A propriedade esta disponivel ? (aperte "y" para sim e "n" para nao)') || '';
             this.sistema.adicionarPropriedades(nomeInput, enderecoInput, capacidadeInput, numDeQuartosInput, precoInput, disponibilidadeInput);
-
-            keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-            break;        
+            break;      
         }
     }
 
+    telaDeAvaliarEstadia(){
+
+        console.clear();
+        console.log("-".repeat(50));
+        console.log("Avaliação de Reserva");
+        console.log("-".repeat(50));
+
+        Propriedade.verListaDePropriedades();
+        const escolha = question('Escolha o ID da propriedade que voce gostaria de avaliar: ');
+        const idPropriedade = parseInt(escolha);
+        const propriedadeSelecionada = Propriedade.listaDePropriedades.find(propriedade => propriedade.idPropriedade === idPropriedade);
+
+        const avaliacaoInput = question('Por favor, nos conste sua experiencia:')
+        propriedadeSelecionada.avaliacoes.push(avaliacaoInput);
+
+        console.clear();
+        console.log("-".repeat(50));
+        console.log("Obrigado por avaliar nossa hospedagem");
+        console.log("-".repeat(50));
+    }
+
+    telaDeVisualizarAvaliacao(){
+        console.clear();
+        console.log("-".repeat(50));
+        console.log("Avaliaçõe da Propriedade");
+        console.log("-".repeat(50));
+
+        Propriedade.verListaDePropriedades();
+        const escolha = question('Escolha o ID da propriedade que voce gostaria de ver as avaliacoes: ');
+        const idPropriedade = parseInt(escolha);
+        const propriedadeSelecionada = Propriedade.listaDePropriedades.find(propriedade => propriedade.idPropriedade === idPropriedade);
+
+        propriedadeSelecionada.verAvaliacoes();
+    }
 
     //------------------------------------ Menu de login cadastrado - Reservas ------------------------------------
 
 
-    // telaDeLoginCadastrado_Reservas(usuario){
-    //     let ciclo = true;
-    //     while (ciclo) {
-    //         console.log("\nEscolha uma opção:");
-    //         console.log("1. Fazer uma reserva");
-    //         console.log("2. Ver minha lista de Reservas")
-    //         console.log("3. Cancelar Reserva ");
-    //         console.log("4. Avaliar Estadia")
-    //         console.log("5. Vizualizar Avaliações")
-    //         console.log("6. Retornar ao menu de seções")
+    telaDeLoginCadastrado_Reservas(usuario){
+        let ciclo = true;
+        while (ciclo) {
+            console.clear();
+            console.log("\nEscolha uma opção:");
+            console.log("1. Fazer uma reserva");
+            console.log("2. Ver minha lista de Reservas")
+            console.log("3. Cancelar Reserva ");
+            console.log("4. Retornar ao menu de seções")
 
     
-    //         const escolha = question('Digite o numero da opcao desejada: ');
+            const escolha = question('Digite o numero da opcao desejada: ');
     
-    //         switch (escolha) {
-    //             case '1':
-    //                 //
-    //                 keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-    //                 break;
-    //             case '2':
-    //                 //
-    //                 keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-    //                 break;
-    //             case '3':
-    //                 //
-    //                 keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-    //                 break;
-    //             case '4':
-    //                 //
-    //                 keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-    //                 break;
-    //             case '5':
-    //                 //
-    //                 keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-    //                 break;
-    //             case '6':
-    //                 ciclo = false;
-    //                 break;
-    //             default:
-    //                 console.log('Opção inválida. Por favor, escolha uma opção válida.');
-    //         }
-    //     }
-    // }
+            switch (escolha) {
+                case '1':
+                    this.telaDeCadastrarReserva(usuario)
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '2':
+                    usuario.verHistoricoDeReservas();
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '3':
+                    this.sistema.cancelarReserva(usuario)
+                    keyInPause('\nPressione qualquer tecla para retornar ao menu.');
+                    break;
+                case '4':
+                    ciclo = false;
+                    break;
+                default:
+                    console.log('Opção inválida. Por favor, escolha uma opção válida.');
+            }
+        }
+    }
 
-    // teladeCadastro_Reserva(usuario){
-    //     while(true){
+    telaDeCadastrarReserva(usuario){
+        while(true){
+            console.clear()
+            console.log("-".repeat(50));
+            console.log('Reserva de Propriedade');
+            console.log("-".repeat(50));
 
-    //         console.log('Tela de Reserva de Propriedade');
+            Propriedade.verListaDePropriedades();
+            const escolha = question('Escolha o ID da propriedade que voce gostaria de reservar: ');
+            const idReserva = parseInt(escolha);
+            const idPropriedadeInput = Propriedade.listaDePropriedades.findIndex(propriedade => propriedade.idPropriedade === idReserva);
+            const propriedadeSelecionada = Propriedade.listaDePropriedades.find(propriedade => propriedade.idPropriedade === idReserva);
 
-    //         Propriedade.verListaDePropriedades();
-    //         const escolha = question('Escolha o ID da propriedade que voce gostaria de reservar: ');
-    //         const idReserva = parseInt(escolha);
-    //         const idPropriedadeInput = Propriedade.listaDePropriedades.findIndex(propriedade => propriedade.idPropriedade === idReserva);
+            const dataCheckInInput = question('Digite a data de Check In (ex: 02/02/2024): ') || '';
+            const dataCheckOutInput = question('Digite a data de Check Out (ex: 05/02/2024): ') || '';
 
-    //         const dataCheckInInput = question('Digite a data de Check In (ex: 02/02/2024): ') || '';
-    //         const dataCheckOutInput = question('Digite a data de Check Out (ex: 05/02/2024): ') || '';
+            const valorTotalInput = Reserva.calcularValorReserva(propriedadeSelecionada.precoPorNoite, dataCheckInInput, dataCheckOutInput);
 
-    //         this.sistema.reservarPropriedade(idPropriedadeInput, usuario.idUsuario, dataCheckInInput, dataCheckOutInput, ); 
+            const statusDePagamentoInput = question('Staus de Pagamento (Pendente ou Pago): ');
 
-    //         keyInPause('\nPressione qualquer tecla para retornar ao menu.');
-    //         break;        
-    //     }
-    // }
+            const novaReserva = this.sistema.reservarPropriedade(idPropriedadeInput, usuario.idUsuario, dataCheckInInput, dataCheckOutInput, valorTotalInput, statusDePagamentoInput);
+            this.sistema.adicionarReservaAoUsuario(usuario, novaReserva);
+            break;      
+        }
+    }
+
 
     //------------------------------------ Menu de login cadastrado - Anuncios ------------------------------------
 

@@ -21,11 +21,11 @@ Desenvolver um sistema personalizado que atenda de forma precisa e eficiente às
 - [x] Excluir Propriedade (Só permite a exclusão caso não haja reservas para a propriedade selecionada. Além disso, anúncios envolvendo essa propriedade também devem ser excluídos.)
 
 #### Reserva
-- [] Ver Lista de Reservas (Ordem Cronológica)
-- [] Reservar Propriedade
-- [] Cancelar Reserva(Exige pelo menos 24h de antecedência)
-- [] Avaliar Estadia
-- [] Visualizar Avaliações
+- [x] Ver Lista de Reservas (Ordem Cronológica)
+- [x] Reservar Propriedade
+- [x] Cancelar Reserva(Exige pelo menos 24h de antecedência)
+- [x] Avaliar Estadia
+- [x] Visualizar Avaliações
 
 #### Anuncio
 - [] Ver Lista de Anúncios (Ordem Alfabética)
